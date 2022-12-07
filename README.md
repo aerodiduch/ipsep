@@ -7,7 +7,7 @@ A CLI tool made with Python to bulk differentiate private from public ips.
 
 `python ipsep.py -h`
 
-```python
+```
 usage: ipsep [-h] -f FILE [-o OUT]
 
 A simple tool to differentiate private ips from public ips.
