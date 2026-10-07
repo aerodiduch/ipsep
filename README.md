@@ -1,75 +1,45 @@
-
 # ipsep
 
-A CLI tool made with Python to bulk differentiate private from public ips.
+[![License: MIT](https://img.shields.io/github/license/aerodiduch/ipsep)](LICENSE) ![Python](https://img.shields.io/badge/python-3776AB?logo=python&logoColor=white)
 
-# Usage
+[Español](README.es.md)
 
-`python ipsep.py -h`
+A small command-line tool that splits a list of IP addresses into private and public. Give it a file with one IP per line and it prints the two groups, or saves them to a file.
 
-```
-usage: ipsep [-h] -f FILE [-o OUT]
+## Usage
 
-A simple tool to differentiate private ips from public ips.
+Python 3, no extra packages.
 
-options:
-  -h, --help            show this help message and exit
-  -f FILE, --file FILE  File containing IPs to parse. Input must be a file containing only one IP per line.
-  -o OUT, --out OUT     Name of the output file. If this is not defined, result will be printed to stdout
-
-made by aerodiduch. https://github.com/aerodiduch
+```sh
+git clone https://github.com/aerodiduch/ipsep
+cd ipsep
+python ipsep.py -f my_ips.txt                 # prints the result
+python ipsep.py -f my_ips.txt -o result.txt   # saves it to a file
 ```
 
-Input file must have one ip per line, for example:
+With this `my_ips.txt`:
 
-`my_ip_file.txt`
 ```
-22.93.11.31
-180.212.134.0
-182.185.9.194
-133.160.248.129
-54.56.183.241
-70.218.26.140
-250.220.30.159
-209.59.84.106
-255.14.218.192
-249.88.35.23
-157.179.252.49
-205.180.13.138
-172.123.123.12
+10.0.0.5
 192.168.1.1
+8.8.8.8
 ```
 
-## Usage example
+you get:
 
-Using aforementioned file `my_ip_file.txt`
-
-`python ipsep.py -f my_ip_file.txt -o filteredips.txt`
-
-`filteredips.txt`
 ```
 *****PRIVATE IPS*****
-172.123.123.12
+10.0.0.5
 192.168.1.1
 -----PUBLIC IPS-----
-180.212.134.0
-54.56.183.241
-157.179.252.49
-133.160.248.129
-22.93.11.31
-205.180.13.138
-209.59.84.106
-249.88.35.23
-250.220.30.159
-182.185.9.194
-255.14.218.192
-70.218.26.140
+8.8.8.8
 ```
 
-If you didn't specify an output file, the result of the script will be printed to ``stdout``
+## Limitations
 
+- It decides by the first number: anything starting with `10`, `172` or `192` counts as private. The real private ranges are narrower (`172.16.0.0` to `172.31.255.255` and `192.168.0.0` to `192.168.255.255`), so an address like `172.123.123.12` or `192.0.2.10` ends up in the private group.
+- Public IPs come out in no particular order.
 
-## Authors
+## License
 
-- [@aerodiduch](https://www.github.com/aerodiduch)
-
+MIT, see [LICENSE](LICENSE).
